@@ -66,16 +66,16 @@ class TestMatrixOperations(unittest.TestCase):
 
     # Тест 2 метода преобразования матрицы в строку
     def test_to_string_method2(self):
-        values = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        values = [[10, 20, 30], [40, 50, 60], [70, 80, 90]]
         matrix = Matrix(values=values)
-        expected_output = "1 2 3\n4 5 6\n7 8 9"
+        expected_output = "10 20 30\n40 50 60\n70 80 90"
         self.assertEqual(str(matrix), expected_output)
 
     # Тест 3 метода преобразования матрицы в строку
     def test_to_string_method3(self):
-        values = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        values = [[11, 22, 33], [44, 55, 66], [77, 88, 99]]
         matrix = Matrix(values=values)
-        expected_output = "1 2 3\n4 5 6\n7 8 9"
+        expected_output = "11 22 33\n44 55 66\n77 88 99"
         self.assertEqual(str(matrix), expected_output)
 
     # Тест 1 исключения при сложении матриц с разными размерами
@@ -87,15 +87,15 @@ class TestMatrixOperations(unittest.TestCase):
 
     # Тест 2 исключения при сложении матриц с разными размерами
     def test_addition_error_different_dimensions2(self):
-        matrix1 = Matrix(rows=2, columns=3)
-        matrix2 = Matrix(rows=3, columns=2)
+        matrix1 = Matrix(rows=4, columns=2)
+        matrix2 = Matrix(rows=2, columns=4)
         with self.assertRaises(ArithmeticError):
             result_matrix = matrix1 + matrix2
 
     # Тест 3 исключения при сложении матриц с разными размерами
     def test_addition_error_different_dimensions3(self):
-        matrix1 = Matrix(rows=2, columns=3)
-        matrix2 = Matrix(rows=3, columns=2)
+        matrix1 = Matrix(rows=6, columns=13)
+        matrix2 = Matrix(rows=13, columns=6)
         with self.assertRaises(ArithmeticError):
             result_matrix = matrix1 + matrix2
 
@@ -109,9 +109,9 @@ class TestMatrixOperations(unittest.TestCase):
 
     # Тест 2 корректного результата сложения матриц
     def test_addition_correct_result2(self):
-        matrix1 = Matrix(values=[[1, 2], [3, 4]])
-        matrix2 = Matrix(values=[[5, 6], [7, 8]])
-        expected_result = Matrix(values=[[6, 8], [10, 12]])
+        matrix1 = Matrix(values=[[11, 22], [33, 44]])
+        matrix2 = Matrix(values=[[55, 66], [77, 88]])
+        expected_result = Matrix(values=[[66, 88], [110, 132]])
         result_matrix = matrix1 + matrix2
         self.assertEqual(result_matrix, expected_result)
 
@@ -125,7 +125,7 @@ class TestMatrixOperations(unittest.TestCase):
     # Тест 2 исключения при умножении матриц с неподходящими размерами
     def test_multiplication_error_invalid_dimensions2(self):
         matrix1 = Matrix(rows=2, columns=3)
-        matrix2 = Matrix(rows=4, columns=2)
+        matrix2 = Matrix(rows=4, columns=4)
         with self.assertRaises(ArithmeticError):
             result_matrix = matrix1 * matrix2
 
@@ -139,8 +139,8 @@ class TestMatrixOperations(unittest.TestCase):
 
     # Тест 2 проверки размеров результата умножения матриц
     def test_multiplication_result_dimensions2(self):
-        matrix1 = Matrix(values=[[1, 2], [3, 4]])
-        matrix2 = Matrix(values=[[5, 6], [7, 8]])
+        matrix1 = Matrix(values=[[11, 22], [33, 44]])
+        matrix2 = Matrix(values=[[55, 66], [77, 88]])
         result_matrix = matrix1 * matrix2
         self.assertEqual(result_matrix.CountRows, matrix1.CountRows)
         self.assertEqual(result_matrix.CountColumns, matrix2.CountColumns)
@@ -154,10 +154,10 @@ class TestMatrixOperations(unittest.TestCase):
         self.assertEqual(result_matrix, expected_result)
 
     # Тест 2 корректного результата умножения матриц
-    def test_multiplication_correct_result2(self):
-        matrix1 = Matrix(values=[[1, 2], [3, 4]])
-        matrix2 = Matrix(values=[[5, 6], [7, 8]])
-        expected_result = Matrix(values=[[19, 22], [43, 50]])
+    def test_multiplication_correct_result3(self):
+        matrix1 = Matrix(values=[[2, 3], [4, 5]])
+        matrix2 = Matrix(values=[[1, 2], [3, 4]])
+        expected_result = Matrix(values=[[11, 16], [19, 28]])
         result_matrix = matrix1 * matrix2
         self.assertEqual(result_matrix, expected_result)
 
@@ -184,9 +184,9 @@ class TestMatrixOperations(unittest.TestCase):
 
     # Тест 2 вычисления определителя треугольной матрицы
     def test_determinant_triangular_matrix2(self):
-        matrix = Matrix(values=[[2, 3, 4], [0, 1, 5], [0, 0, 3]])
+        matrix = Matrix(values=[[2, 3, 4], [0, 2, 5], [0, 0, 3]])
         det = matrix.determinant_triangular()
-        expected_det = 2 * 1 * 3
+        expected_det = 2 * 2 * 3
         self.assertEqual(det, expected_det)
 
 
