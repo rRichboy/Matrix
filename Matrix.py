@@ -1,5 +1,6 @@
 import random
 
+
 class Matrix:
 
     #  Конструктор класса
@@ -87,39 +88,32 @@ class Matrix:
         return Matrix(rows=self.CountRows, columns=other.CountColumns, values=result_values)
 
     # Метод для приведения матрицы к верхнетреугольному виду
-    def to_upper_triangular(self):
-        for i in range(min(self.CountRows, self.CountColumns)):
-            # Make the diagonal element 1
-            if self.Values[i][i] != 0:
-                factor = 1 / self.Values[i][i]
-                self.Values[i] = [val * factor for val in self.Values[i]]
+    def to_upper_triangular(self, matrix):
 
-            # Eliminate below the diagonal
-            for j in range(i + 1, self.CountRows):
-                factor = -self.Values[j][i]
-                self.Values[j] = [val_j + val_i * factor for val_j, val_i in zip(self.Values[j], self.Values[i])]
+        rows, cols = len(matrix), len(matrix[0])
 
-    # Метод для вычисления определителя верхнетреугольной матрицы
+        for i in range(min(rows, cols)):
+            pivot_row = i
+            while pivot_row < rows and matrix[pivot_row][i] == 0:
+                pivot_row += 1
+
+            if pivot_row == rows:
+                continue
+
+            matrix[i], matrix[pivot_row] = matrix[pivot_row], matrix[i]
+
+            for j in range(i + 1, rows):
+                factor = matrix[j][i] / matrix[i][i]
+                for k in range(i, cols):
+                    matrix[j][k] -= factor * matrix[i][k]
+
+        self.Values = matrix
+
+
+    # Метод для вычисления определителя треугольной матрицы
     def determinant_triangular(self):
         det = 1
         for i in range(self.CountRows):
             det *= self.Values[i][i]
         return det
 
-    # Метод для решения системы линейных уравнений методом обратной подстановки
-    def solve_equation_substitution(self, constants):
-        if self.CountRows != self.CountColumns - 1:
-            raise ValueError("The matrix should be square and augmented with a column of constants.")
-
-        coefficients = [row[:-1] for row in self.Values]
-        results = [row[-1] for row in self.Values]
-
-        if not all(len(row) == self.CountColumns - 1 for row in self.Values):
-            raise ValueError("The matrix should be augmented with a column of constants.")
-
-        solutions = [0] * self.CountColumns
-        for i in range(self.CountRows - 1, -1, -1):
-            total = results[i] - sum(coeff * sol for coeff, sol in zip(coefficients[i][i + 1:], solutions[i + 1:]))
-            solutions[i] = total / coefficients[i][i]
-
-        return solutions
