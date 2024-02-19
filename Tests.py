@@ -189,6 +189,26 @@ class TestMatrixOperations(unittest.TestCase):
         expected_det = 2 * 2 * 3
         self.assertEqual(det, expected_det)
 
+    # Тест 1 метода решения системы линейных уравнений методом обратной подстановки
+    def test_solve_equation_substitution1(self):
+        matrix = Matrix(values=[[4, 3, 21, 4], [0, 3, 7, 1], [0, 0, 9, 2]])
+        if matrix.CountColumns - 1 != matrix.CountRows:
+            raise ValueError("The matrix should be augmented with a column of constants.")
+
+        result = matrix.solve_equation_substitution()
+        exp_result = [-0.02777777777777768, -0.18518518518518512,  0.2222222222222222, 0]
+        self.assertEqual(result, exp_result)
+
+    # Тест 2 метода решения системы линейных уравнений методом обратной подстановки
+    def test_solve_equation_substitution2(self):
+        matrix = Matrix(values=[[12, 56, 11, 7], [0, 4, 5, 3], [0, 0, 8, 1]])
+        if matrix.CountColumns - 1 != matrix.CountRows:
+            raise ValueError("The matrix should be augmented with a column of constants.")
+
+        result = matrix.solve_equation_substitution()
+        exp_result = [-2.3020833333333335, 0.59375, 0.125, 0]
+        self.assertEqual(result, exp_result)
+
 
 if __name__ == '__main__':
     unittest.main()

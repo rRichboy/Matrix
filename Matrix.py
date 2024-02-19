@@ -117,3 +117,20 @@ class Matrix:
             det *= self.Values[i][i]
         return det
 
+    # Метод для решения системы линейных уравнений методом обратной подстановки
+    def solve_equation_substitution(self):
+        if self.CountRows != self.CountColumns - 1:
+            raise ValueError("The matrix should be square and augmented with a column of constants.")
+
+        coefficients = [row[:-1] for row in self.Values]
+        results = [row[-1] for row in self.Values]
+
+        solutions = [0] * self.CountColumns
+        for i in range(self.CountRows - 1, -1, -1):
+            total = results[i] - sum(coeff * sol for coeff, sol in zip(coefficients[i][i + 1:], solutions[i + 1:]))
+            solutions[i] = total / coefficients[i][i]
+
+        return solutions
+
+
+
